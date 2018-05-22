@@ -161,6 +161,43 @@ export const FicheMandataire = ({ style, mandataire }) => (
   </div>
 );
 
+export const TiView = ({
+  findPostcode,
+  updateFilters,
+  filteredMesures,
+  postcodeCoordinates,
+  mandatairesCount,
+  filteredMandataires,
+  openModal,
+  closeModal,
+  isOpen,
+  currentMandataire
+}) => (
+  <div>
+    <PanelFilterMandataires findPostcode={findPostcode} updateFilters={updateFilters} />
+    <OpenStreeMap
+      mesures={filteredMesures}
+      postcodeMandataire={postcodeCoordinates}
+      width={"100%"}
+      height={"400px"}
+    />
+    <div className="container">
+      <Title>
+        {mandatairesCount} Professionel{(mandatairesCount > 1 && "s") || null} référencé{(mandatairesCount >
+          1 &&
+          "s") ||
+          null}{" "}
+      </Title>
+      <TableMandataire rows={filteredMandataires} openModal={openModal} />
+      <ModalMandataire isOpen={isOpen} closeModal={closeModal}>
+        {currentMandataire && (
+          <FicheMandataire mandataire={currentMandataire} style={{ textAlign: "left" }} />
+        )}
+      </ModalMandataire>
+    </div>
+  </div>
+);
+
 class Ti extends React.Component {
   state = {
     data: [],
@@ -234,32 +271,18 @@ class Ti extends React.Component {
     const mandatairesCount = filteredMandataires.length;
 
     return (
-      <div>
-        <PanelFilterMandataires
-          findPostcode={this.findPostcode}
-          updateFilters={this.updateFilters}
-        />
-        <OpenStreeMap
-          mesures={filteredMesures}
-          postcodeMandataire={this.state.postcodeCoordinates}
-          width={"100%"}
-          height={"400px"}
-        />
-        <div className="container">
-          <Title>
-            {mandatairesCount} Professionel{(mandatairesCount > 1 && "s") || null} référencé{(mandatairesCount > 1 && "s") || null}{" "}
-          </Title>
-          <TableMandataire rows={filteredMandataires} openModal={this.openModal} />
-          <ModalMandataire isOpen={this.state.modalIsOpen} closeModal={this.closeModal}>
-            {this.state.currentMandataire && (
-              <FicheMandataire
-                mandataire={this.state.currentMandataire}
-                style={{ textAlign: "left" }}
-              />
-            )}
-          </ModalMandataire>
-        </div>
-      </div>
+      <TiView
+        findPostcode={this.findPostcode}
+        updateFilters={this.updateFilters}
+        filteredMesures={filteredMesures}
+        postcodeCoordinates={this.state.postcodeCoordinates}
+        mandatairesCount={mandatairesCount}
+        filteredMandataires={filteredMandataires}
+        openModal={this.openModal}
+        closeModal={this.closeModal}
+        isOpen={this.state.modalIsOpen}
+        currentMandataire={this.state.currentMandataire}
+      />
     );
   }
 }
