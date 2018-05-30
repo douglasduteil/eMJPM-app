@@ -189,6 +189,7 @@ class Ti extends React.Component<Props, State> {
   state = {
     data: [],
     datamesure: [],
+      mandaMesures: [],
     searchType: "",
     searchTypeIn: "",
     searchTypePr: "",
@@ -228,7 +229,13 @@ class Ti extends React.Component<Props, State> {
     this.setState({ datamesure: mesures });
   };
 
-  updateFilters = filters => {
+    updateMandataireMesures = mesures => {
+        this.setState({ mandaMesures: mesures });
+    };
+
+
+
+    updateFilters = filters => {
     this.setState(filters);
   };
 
@@ -278,6 +285,9 @@ class Ti extends React.Component<Props, State> {
           width={"100%"}
           height={"400px"}
           updateMesures={this.updateMesures}
+          updateMandataireMesures={this.updateMandataireMesures}
+          filteredMesures={this.state.mandaMesures}
+          openModal={this.openModal}
         />
         <div className="container">
           <Title>
