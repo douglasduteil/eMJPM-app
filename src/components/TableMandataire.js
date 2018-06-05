@@ -63,7 +63,7 @@ const TableMandataire = ({ rows, openModal,updateFilters }) => {
               style={{ width: "40%", textAlign: "left", color: "#696969", borderTopWidth: "0px" }}
               colSpan="2"
             >
-              Nom ou établissement
+              Nom
             </td>
 
             {/*<td*/}
@@ -85,7 +85,7 @@ const TableMandataire = ({ rows, openModal,updateFilters }) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map(mandataire => (
+          {rows && rows.map(mandataire => (
             <TableRowMandataire
               key={mandataire.telephone}
               mandataire={mandataire}
