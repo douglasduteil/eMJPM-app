@@ -307,6 +307,9 @@ class Ti extends React.Component<Props, State> {
         updateMandataireFilters={this.updateMandataireFilters}
         mandataireCount={mandataireCount}
         filteredMandataires={filteredMandataires}
+        isOpen={this.state.modalIsOpen}
+        closeModal={this.closeModal}
+        mandataire={this.state.currentMandataire}
       />
     );
   }
@@ -331,7 +334,10 @@ const TiView = ({
   mandataires,
   updateMandataireFilters,
   mandataireCount,
-  filteredMandataires
+  filteredMandataires,
+  isOpen,
+  closeModal,
+  mandataire
 }) => (
   <div className="container" style={{ backgroundColor: "#ebeff2", minHeight: "60vh" }}>
     <Tabs>
@@ -363,6 +369,9 @@ const TiView = ({
           value={value}
           updateValue={updateValue}
         />
+        <ModalMandataire isOpen={isOpen} closeModal={closeModal}>
+          <FicheMandataire mandataire={mandataire} />
+        </ModalMandataire>
       </TabPanel>
       <TabPanel>
         <OpenStreeMapMandataires
@@ -382,6 +391,9 @@ const TiView = ({
           value={value}
           updateValue={updateValue}
         />
+        <ModalMandataire isOpen={isOpen} closeModal={closeModal}>
+          <FicheMandataire mandataire={mandataire} />
+        </ModalMandataire>
       </TabPanel>
     </Tabs>
   </div>
