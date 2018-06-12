@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import {closeModalAction, openModalAction} from "../../actions";
+import {connect} from "react-redux";
 
 const getColorFromDisponibilite = dispo => {
   if (dispo <= 0) {
@@ -46,7 +48,14 @@ export const Circle = styled.div`
   display: inline-block;
 `;
 
+function mapDispatchToProps(dispatch) {
+    return {
+        onModalOpen: () => dispatch(openModalAction)
+    };
+}
+
 const TableRowMandataire = ({ mandataire, onClick }) => {
+    const onModalOpen = this.props;
   const {
     type,
     etablissement,
@@ -55,7 +64,7 @@ const TableRowMandataire = ({ mandataire, onClick }) => {
     dispo_max
   } = mandataire;
   return (
-    <tr onClick={onClick} style={{ cursor: "pointer" }}>
+    <tr onClick={onModalOpen} style={{ cursor: "pointer" }}>
       <Cell style={{ width: "100px" }}>
         <Circle
           style={{
@@ -76,4 +85,5 @@ const TableRowMandataire = ({ mandataire, onClick }) => {
   );
 };
 
-export default TableRowMandataire;
+export default connect(mapDispatchToProps)(TableRowMandataire);
+

@@ -10,6 +10,12 @@ import RowModal from "../src/components/communComponents/RowModal";
 import Footer from "../src/components/communComponents/Footer";
 import Commentaire from "../src/components/tiComponents/Commentaire";
 import apiFetch from "../src/components/communComponents/Api";
+import { createStore } from "redux";
+import { Provider, connect } from "react-redux";
+import AddModalMandataire from "../src/containers/AddModal";
+import rootReducer from "../src/reducers";
+
+const store = createStore(rootReducer);
 
 const modalStyles = {
   content: {
@@ -376,9 +382,10 @@ const TiView = ({
           value={value}
           updateValue={updateValue}
         />
-        <ModalMandataire isOpen={isOpen} closeModal={closeModal}>
-          <FicheMandataire mandataire={mandataire} />
-        </ModalMandataire>
+        <AddModalMandataire mandataire={mandataire} />
+        {/*<ModalMandataire isOpen={isOpen} closeModal={closeModal}>*/}
+        {/*<FicheMandataire mandataire={mandataire} />*/}
+        {/*</ModalMandataire>*/}
       </TabPanel>
       <TabPanel>
         <OpenStreeMapMandataires
@@ -407,15 +414,18 @@ const TiView = ({
 );
 
 const TiPage = () => (
-  <div style={{ minHeight: "100%", backgroundColor: "#cad4de" }}>
-    <Navigation logout />
-    <div className="container">
-      <h1>Chercher au plus proche du majeur à protéger</h1>
-      <br />
-    </div>
-    <Ti style={{ marginTop: "100%" }} />
-    <Footer />
+    <Provider store={store}>
+    <div style={{ minHeight: "100%", backgroundColor: "#cad4de" }}>
+      <Navigation logout />
+      <div className="container">
+        <h1>Chercher au plus proche du majeur à protéger</h1>
+        <br />
+      </div>
+      <Ti style={{ marginTop: "100%" }} />
+      <Footer />
   </div>
+    </Provider>
+
 );
 
 export default TiPage;
