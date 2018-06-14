@@ -54,8 +54,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-const TableRowMandataire = ({ mandataire, onClick }) => {
-    const onModalOpen = this.props;
+const TableRowMandataire = ({ mandataire, onClick, onModalOpen }) => {
   const {
     type,
     etablissement,
@@ -85,5 +84,5 @@ const TableRowMandataire = ({ mandataire, onClick }) => {
   );
 };
 
-export default connect(mapDispatchToProps)(TableRowMandataire);
+export default connect(null,mapDispatchToProps)(TableRowMandataire);
 

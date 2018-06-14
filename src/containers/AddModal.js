@@ -6,9 +6,9 @@ import Commentaire from "../components/tiComponents/Commentaire";
 import RowModal from "../components/communComponents/RowModal";
 
 function mapStateToProps(state) {
-  console.log("hllo",state.openModal)
+  console.log("hllo",state)
   return {
-    openModal: state.openModal
+    openModal: state.modal.openModal
   };
 }
 
