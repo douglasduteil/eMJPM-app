@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import LoadingMessage from "../common/LoadingMessage";
 
-import DataLoader from "./DataLoader";
+import Resolve from "../common/Resolve";
 
 const Attribution = () => (
   <TileLayer
@@ -11,6 +12,7 @@ const Attribution = () => (
   />
 );
 
+// todo: better display
 const MesureMarker = ({ id, latitude, longitude, array_agg }) => (
   <Marker key={id} position={[latitude, longitude]}>
     <Popup>
@@ -27,13 +29,20 @@ const MesureMarker = ({ id, latitude, longitude, array_agg }) => (
 );
 
 const MapMesures = ({ getPromise, center = [48.866667, 2.333333] }) => (
-  <DataLoader
-    getPromise={getPromise}
-    render={({ data }) => (
-      <Map center={center} zoom={9} style={{ width: "100%", height: "70vh", padding: 0 }}>
-        <Attribution />
-        {data && data.map((marker, i) => <MesureMarker key={marker.id + "" + i} {...marker} />)}
-      </Map>
+  <Resolve
+    promises={[() => getPromise()]}
+    render={({ status, result }) => (
+      <React.Fragment>
+        {status === "success" && (
+          <Map center={center} zoom={9} style={{ width: "100%", height: "70vh", padding: 0 }}>
+            <Attribution />
+            {result[0] &&
+              result[0].map((marker, i) => <MesureMarker key={marker.id + "" + i} {...marker} />)}
+          </Map>
+        )}
+        {status === "error" && <div>Impossible de charger la carte des mesures</div>}
+        {status === "loading" && <LoadingMessage />}
+      </React.Fragment>
     )}
   />
 );

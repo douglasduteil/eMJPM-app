@@ -2,7 +2,7 @@ import InscriptionIndividuel from "./InscriptionIndividuel";
 import InscriptionPrepose from "./InscriptionPrepose";
 import InscriptionService from "./InscriptionService";
 import TiSelector from "./TiSelector";
-import Resolve from "../Resolve";
+import Resolve from "../common/Resolve";
 import apiFetch from "../communComponents/Api";
 import Router from "next/router";
 
@@ -77,12 +77,12 @@ class Form extends React.Component {
   render() {
     const FormMandataire = formsMandataires[this.state.typeMandataire];
     return (
-      <div className="container Inscription">
+      <div className="container Inscription" data-cy="form-inscription">
         <div className="col-12 offset-sm-2 col-sm-8 offset-md-2 col-md-8">
           <h1 style={{ margin: 20 }}>Inscription</h1>
           <div style={{ backgroundColor: "white", padding: 25 }}>
             <Resolve
-              promises={[getTis()]}
+              promises={[() => getTis()]}
               render={({ status, result }) => (
                 <div style={{ margin: "20px 0" }}>
                   <div style={{ fontSize: "1.2em", fontWeight: "bold", margin: "20px 0" }}>

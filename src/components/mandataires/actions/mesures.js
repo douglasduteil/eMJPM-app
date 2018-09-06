@@ -1,6 +1,7 @@
 import { hide } from "redux-modal";
 
 import apiFetch from "../../communComponents/Api";
+import { mandatairesUpdated } from "../../tiComponents/actions/mandataire";
 
 export const MESURE_CREATE = "MESURE_CREATE";
 export const MESURE_CREATED = "MESURE_CREATED";
@@ -23,6 +24,14 @@ const closeMesureApi = data =>
     body: JSON.stringify({
       status: "Eteindre mesure",
       extinction: data.date
+    })
+  });
+const attenteMesureApi = data =>
+  apiFetch(`/mandataires/1/mesures/${data.id}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      ...data,
+      status: "Mesure en cours"
     })
   });
 
@@ -50,6 +59,13 @@ const createMesureApi = data =>
     })
   });
 
+const fetchUpdateMesureAttente = data =>
+  apiFetch("/mandataires/1/mesures-en-attente", {
+    method: "PUT",
+    body: JSON.stringify({
+      ...data
+    })
+  });
 // -------- ACTIONS CREATORS
 
 export const updateMesure = data => dispatch =>
@@ -63,6 +79,20 @@ export const updateMesure = data => dispatch =>
       alert("Impossible de soumettre les données");
       throw e;
     });
+
+export const updateMesureAttente = data => dispatch => {
+  attenteMesureApi(data)
+    .then(() => fetchUpdateMesureAttente(data))
+    .then(json => {
+      dispatch(hide("ValiderMesureEnAttente"));
+      dispatch(mesureUpdated(json));
+    })
+    .catch(e => {
+      console.log(e);
+      alert("Impossible de soumettre les données");
+      throw e;
+    });
+};
 
 export const closeMesure = data => dispatch =>
   closeMesureApi(data)
