@@ -12,29 +12,17 @@ function validate(formData, errors) {
   }
   return errors;
 }
+
+const cabinet = ["1A", "1B", "2A", "2B", "3A", "3B", "4A", "4B", "5A", "5B", "6A", "6B"];
 const schema = {
   type: "object",
-  required: [
-    "username",
-    "pass1",
-    "pass2",
-    "etablissement",
-    "telephone",
-    "email",
-    "adresse",
-    "ville",
-    "code_postal"
-  ],
+  required: ["username", "pass1", "pass2", "email"],
   properties: {
     username: { type: "string", title: "Identifiant", default: "" },
     pass1: { type: "string", title: "Mot de passe", minLength: 10 },
-    etablissement: { type: "string", title: "Établissement", default: "" },
-    telephone: { type: "string", title: "Téléphone", default: "" },
+    pass2: { type: "string", title: "Verifier le Mot de passe", minLength: 10 },
     email: { type: "string", title: "Adresse email", default: "" },
-    adresse: { type: "string", title: "Rue", default: "" },
-    ville: { type: "string", title: "Commune", default: "" },
-    code_postal: { type: "string", title: "Code Postal", default: "" },
-    type: { type: "string", default: "ti" }
+    cabinet: { type: "string", title: "Cabinet (pour Paris)", default: "", enum: cabinet }
   }
 };
 
@@ -46,26 +34,8 @@ const uiSchema = {
   username: {
     "ui:placeholder": "Nom d'utilisateur"
   },
-  etablissement: {
-    "ui:placeholder": "Établissement"
-  },
-  telephone: {
-    "ui:placeholder": "Téléphone"
-  },
   email: {
     "ui:placeholder": "Adresse email"
-  },
-  adresse: {
-    "ui:placeholder": "Rue"
-  },
-  code_postal: {
-    "ui:placeholder": "Code Postal"
-  },
-  ville: {
-    "ui:placeholder": "Commune"
-  },
-  type: {
-    classNames: "hidden_input_form_inscription"
   }
 };
 
